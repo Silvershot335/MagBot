@@ -1,6 +1,6 @@
 import discord
 import os
-from keepAlive import keep_alive
+from dotenv import load_dotenv
 
 client = discord.Client()
 
@@ -23,7 +23,7 @@ async def on_message(message):
   if message.content.startswith('good ole silvershot'):
     await message.channel.send('he\'s from texas')
 
-  
-keep_alive()
-client.run(os.getenv('TOKEN'))
+load_dotenv()
+Token = os.environ.get('token')
+client.run(Token)
 
