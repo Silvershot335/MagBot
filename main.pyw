@@ -1,5 +1,7 @@
 import discord
 import os
+from help import Help
+from mod import modMail
 from dotenv import load_dotenv
 
 client = discord.Client()
@@ -13,6 +15,16 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
+  #catch errors I don't understand
+  try:
+    await modMail(message)
+  except:
+    print('nope')
+  try:
+    await Help(message)
+  except:
+    print('nope')  
+
   if message.content.startswith('-test'):
     await message.channel.send('reply')
 
@@ -25,40 +37,11 @@ async def on_message(message):
   if message.content.startswith('good ole silvershot'):
     await message.channel.send('he\'s from texas')
 
-  if message.content.startswith('-modmail') and message.channel.id == (952690676783538277):
-    modChannel = client.get_channel(648735556565467146)
-    mail = message.content.split('-modmail ')[1]
-    submitter = message.author.id
-    embed = discord.Embed (
-      title = 'New Mod Mail',
-      description = f'<@{submitter}>\n{mail}'
-    )
-    await modChannel.send(embed=embed)
-
-  if message.content.startswith('-help'):
-    embed = discord.Embed (
-      title = 'MagBot',
-      description = 'Commands List'
-    )
-    embed.add_field(
-      name = '-playlistrules',
-      value = 'Rules for Playlist Club',
-      inline=False
-    )
-    embed.add_field(
-      name = '-playlistlink',
-      value = 'Playlist Club Website',
-      inline=False
-    )
-    embed.add_field(
-      name = '-modmail',
-      value = 'Send your messages to the mods.\nUse this command in the Mod Mail channel.\n-modmail Example Text',
-      inline=False
-    )
-    await message.channel.send(embed=embed)
 
   if message.content.startswith('-killbot') and message.author.id == 177116185006047232:
     await exit()
+
+
 
 load_dotenv()
 Token = os.environ.get('token')
