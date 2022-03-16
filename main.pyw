@@ -2,6 +2,8 @@ import discord
 import os
 from help import Help
 from mod import modMail
+from poll import Poll
+from poll import Poll2
 from dotenv import load_dotenv
 
 client = discord.Client()
@@ -24,6 +26,14 @@ async def on_message(message):
     await Help(message)
   except:
     print('nope')  
+  try:
+    await Poll(message)
+  except:
+    print('nope')
+  try:
+    await Poll2(message)
+  except:
+    print('nope')
 
   if message.content.startswith('-test'):
     await message.channel.send('reply')
@@ -39,6 +49,7 @@ async def on_message(message):
 
 
   if message.content.startswith('-killbot') and message.author.id == 177116185006047232:
+    await message.reply('oof')
     await exit()
 
 
