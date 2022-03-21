@@ -1,9 +1,12 @@
 import discord
 import os
+import sqlite3
 from help import Help
+from commands import add_Command
+from commands import checkCommands
 from mod import modMail
 from poll import Poll
-from poll import Poll2
+from poll import Multipoll
 from dotenv import load_dotenv
 
 client = discord.Client()
@@ -18,22 +21,36 @@ async def on_ready():
 async def on_message(message):
 
   #catch errors I don't understand
-  try:
-    await modMail(message)
-  except:
-    print('nope')
-  try:
-    await Help(message)
-  except:
-    print('nope')  
-  try:
-    await Poll(message)
-  except:
-    print('nope')
-  try:
-    await Poll2(message)
-  except:
-    print('nope')
+  if message.content.startswith('-modmail') and message.channel.id == (952690676783538277):
+    try:
+      await modMail(message)
+    except Exception as e:
+      print(e)
+  if message.content.startswith('-help'):
+    try:
+      await Help(message)
+    except Exception as e:
+      print(error)  
+  if message.content.startswith('-multipoll'):
+    try:
+      await Multipoll(message)
+    except Exception as e:
+      print(e)
+  if message.content.startswith('-poll'):
+    try:
+      await Poll(message)
+    except Exception as e:
+      print(e)
+  if message.content.startswith('-addcommand'):
+    try:
+      await add_Command(message)
+    except Exception as e:
+      print(e)
+  if message.content.startswith('-key'):
+    try:
+      await checkCommands(message)
+    except Exception as e:
+      print(e)
 
   if message.content.startswith('-test'):
     await message.channel.send('reply')

@@ -22,8 +22,18 @@ async def Help(message):
             inline=False
     )
         embed.add_field(
-            name = '-poll',
+            name = '-multipoll',
             value = 'Start a poll!\n-poll Option (for 1 option)\n-poll\nOption1\nOption2\n(For Multi-Option)',
+            inline=False
+    )
+        embed.add_field(
+            name = '-addcommand',
+            value = 'Add a Custom Command!\n-addcommand\nKey\nValue',
+            inline=False
+    )
+        embed.add_field(
+            name = '-key',
+            value = 'Use a Saved Command!\n-key\ncommand',
             inline=False
         )
         await message.channel.send(embed=embed)
