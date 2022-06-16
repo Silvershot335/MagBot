@@ -9,3 +9,4 @@ async def modMail(message):
         description = f'<@{submitter}>\n{mail}'
     )
     await modChannel.send(embed=embed)
+    await message.delete()
