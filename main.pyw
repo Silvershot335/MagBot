@@ -11,6 +11,9 @@ from dotenv import load_dotenv
 
 client = discord.Client()
 
+banned = ['testvar2', 'nigger', 'faggot', 'nigga', ]
+
+
 @client.event
 async def on_ready():
   await client.change_presence(activity=discord.Activity(
@@ -20,7 +23,14 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
-  #catch errors I don't understand
+  for x in banned: 
+    if message.content.casefold().find(x) >= 0:
+      mute = discord.utils.get(message.guild.roles, name = "Muted")
+      await message.reply('<@&648751890045206568> Chat Filter Tripped')
+      await message.author.add_roles(mute)
+      await message.delete()
+
+    #catch errors I don't understand
   if message.content.startswith('-modmail') and message.channel.id == (952690676783538277):
     try:
       await modMail(message)
@@ -51,6 +61,8 @@ async def on_message(message):
       await checkCommands(message)
     except Exception as e:
       print(e)
+
+
 
   if message.content.startswith('-test'):
     await message.channel.send('reply')
